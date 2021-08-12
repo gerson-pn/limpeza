@@ -12,6 +12,7 @@ import com.gpn.processos.Apagador;
 import com.gpn.processos.Buscador;
 import com.gpn.processos.BuscadorArquivos;
 import com.gpn.processos.BuscadorDiretorios;
+import com.gpn.processos.Listador;
 import com.gpn.processos.SeparadorExtensao;
 
 @SpringBootApplication
@@ -29,8 +30,11 @@ public class LimpezaApplication {
 				System.out.println("Excluindo arquivos da extensão: ." + extensao);
 				Buscador buscadorDiretorios = new BuscadorDiretorios(diretorioRaiz);
 				List<File> diretorios = buscadorDiretorios.buscar();
+				diretorios.add(diretorioRaiz);
 				Buscador buscadorArquivos = new BuscadorArquivos(diretorios, extensao);
 				List<File> arquivos = buscadorArquivos.buscar();
+				Listador listador = new Listador(arquivos);
+				listador.listarNomesArquivos();
 				Apagador apagador = new Apagador(arquivos);
 				apagador.excluirArquivos();
 			}

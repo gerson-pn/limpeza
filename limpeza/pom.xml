@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>gpn</groupId>
 	<artifactId>limpeza</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>limpeza</name>
 	<description>Projeto de uma aplicação, do tipo cli (command line interface), para excluir arquivos de um determinado tipo, a partir de um diretório raiz.</description>
 	<properties>
