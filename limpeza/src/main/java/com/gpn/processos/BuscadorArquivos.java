@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class BuscadorArquivos implements Buscador {
 	private List<File> diretorios;
 	private String extensao;
+
+	public BuscadorArquivos(List<File> diretorios, String extensao) {
+		this.diretorios = diretorios;
+		this.extensao = extensao;
+	}
 
 	@Override
 	public List<File> buscar() {

@@ -3,11 +3,12 @@ package com.gpn.processos;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class SeparadorExtensao {
 	private String[] extensoes;
+
+	public SeparadorExtensao(String[] extensoes) {
+		this.extensoes = extensoes;
+	}
 
 	public List<String> separarExtensoes() {
 		List<String> extensoesCorretas = new ArrayList<>();
