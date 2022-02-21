@@ -12,6 +12,7 @@ import com.gpn.processos.Apagador;
 import com.gpn.processos.Buscador;
 import com.gpn.processos.BuscadorArquivos;
 import com.gpn.processos.BuscadorDiretorios;
+import com.gpn.processos.BuscadorDiretoriosVazios;
 import com.gpn.processos.Listador;
 import com.gpn.processos.SeparadorExtensao;
 
@@ -26,11 +27,11 @@ public class LimpezaApplication {
 			SeparadorExtensao separadorExtensao = new SeparadorExtensao(extensoes);
 			List<String> extensoesCorretas = separadorExtensao.separarExtensoes();
 			File diretorioRaiz = new File(".");
+			Buscador buscadorDiretorios = new BuscadorDiretorios(diretorioRaiz);
+			List<File> diretorios = buscadorDiretorios.buscar();
+			diretorios.add(diretorioRaiz);
 			for (String extensao : extensoesCorretas) {
 				System.out.println("Excluindo arquivos da extensão: ." + extensao);
-				Buscador buscadorDiretorios = new BuscadorDiretorios(diretorioRaiz);
-				List<File> diretorios = buscadorDiretorios.buscar();
-				diretorios.add(diretorioRaiz);
 				Buscador buscadorArquivos = new BuscadorArquivos(diretorios, extensao);
 				List<File> arquivos = buscadorArquivos.buscar();
 				Listador listador = new Listador(arquivos);
@@ -38,6 +39,13 @@ public class LimpezaApplication {
 				Apagador apagador = new Apagador(arquivos);
 				apagador.excluirArquivos();
 			}
+			Buscador buscadorDiretoriosVazios = new BuscadorDiretoriosVazios(diretorios);
+			List<File> diretoriosVazios = buscadorDiretoriosVazios.buscar();
+			do {
+				Apagador apagadorDiretoriosVazios = new Apagador(diretoriosVazios);
+				apagadorDiretoriosVazios.excluirArquivos();
+				diretoriosVazios = buscadorDiretoriosVazios.buscar();
+			} while (diretoriosVazios.size() > 0);
 		}
 	}
 }
