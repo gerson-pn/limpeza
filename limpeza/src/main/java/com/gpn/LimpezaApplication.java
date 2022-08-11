@@ -12,6 +12,7 @@ import com.gpn.processos.Apagador;
 import com.gpn.processos.Buscador;
 import com.gpn.processos.BuscadorArquivos;
 import com.gpn.processos.BuscadorDiretorios;
+import com.gpn.processos.BuscadorDiretoriosGit;
 import com.gpn.processos.BuscadorDiretoriosVazios;
 import com.gpn.processos.Listador;
 import com.gpn.processos.SeparadorExtensao;
@@ -39,6 +40,14 @@ public class LimpezaApplication {
 				Apagador apagador = new Apagador(arquivos);
 				apagador.excluirArquivos();
 			}
+
+			Buscador buscadorDiretoriosGit = new BuscadorDiretoriosGit(diretorios);
+			List<File> diretoriosGit = buscadorDiretoriosGit.buscar();
+			Buscador buscadorArquivosGit = new BuscadorArquivos(diretoriosGit, null);
+			List<File> arquivosGit = buscadorArquivosGit.buscar();
+			Apagador apagadorGit = new Apagador(arquivosGit);
+			apagadorGit.excluirArquivos();
+
 			Buscador buscadorDiretoriosVazios = new BuscadorDiretoriosVazios(diretorios);
 			List<File> diretoriosVazios = buscadorDiretoriosVazios.buscar();
 			do {

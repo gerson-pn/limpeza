@@ -13,8 +13,7 @@ public class BuscadorArquivos implements Buscador {
 		this.extensao = extensao;
 	}
 
-	@Override
-	public List<File> buscar() {
+	private List<File> buscarPorExtensao() {
 		List<File> arquivosSelecionados = new ArrayList<>();
 		for (File diretorio : diretorios) {
 			String[] nomesArquivosInternos = diretorio.list();
@@ -28,4 +27,28 @@ public class BuscadorArquivos implements Buscador {
 		return arquivosSelecionados;
 	}
 
+	private List<File> buscarTodos() {
+		List<File> arquivosSelecionados = new ArrayList<>();
+		for (File diretorio : diretorios) {
+			String[] nomesArquivosInternos = diretorio.list();
+			for (String nome : nomesArquivosInternos) {
+				File arquivoInterno = new File(diretorio, nome);
+				if (arquivoInterno.isFile()) {
+					arquivosSelecionados.add(arquivoInterno);
+				}
+			}
+		}
+		return arquivosSelecionados;
+	}
+
+	@Override
+	public List<File> buscar() {
+		List<File> arquivosSelecionados = new ArrayList<>();
+		if (this.extensao != null) {
+			arquivosSelecionados = this.buscarPorExtensao();
+		} else {
+			arquivosSelecionados = this.buscarTodos();
+		}
+		return arquivosSelecionados;
+	}
 }
